@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Win11 React Desktop",
+    "icon": "img/icon/win/settings.png",
+    "type": "app",
+    "data": {
+      "type": "IFrame",
+      "url": "https://github.com/elmira-ashrafi/win11-react-desktop",
+      "gallery": [],
+      "desc": "An interactive Windows 11 desktop experience built with React, Redux, and Vite. This portfolio project demonstrates window management, drag-and-resize interactions, a start menu, file explorer, terminal, and multiple integrated apps — all running in the browser as a progressive web app.",
+      "feat": "React 18 + Redux state management\nVite build tooling and PWA support\nWindow snapping, drag, and resize\nStart menu, taskbar, and widgets\nMulti-app desktop simulation\nSCSS, Tailwind CSS, and i18n"
+    }
+  },
+  {
+    "name": "GitHub Portfolio",
+    "icon": "img/icon/github.png",
+    "type": "app",
+    "data": {
+      "type": "IFrame",
+      "url": "https://github.com/elmira-ashrafi",
+      "gallery": [],
+      "desc": "My open-source projects and portfolio work on GitHub. Explore repositories showcasing frontend development, UI engineering, and creative web experiences.",
+      "feat": "Open-source projects\nReact and JavaScript work\nPortfolio repositories\nVersion control with Git"
+    }
+  },
+  {
+    "name": "React Docs",
+    "icon": "img/icon/edge.png",
+    "type": "app",
+    "data": {
+      "type": "IFrame",
+      "url": "https://react.dev",
+      "gallery": [],
+      "desc": "Official React documentation — the library at the core of this project. Covers components, hooks, state management patterns, and modern React best practices.",
+      "feat": "Component architecture\nHooks and state\nServer components\nBest practices"
+    }
+  },
+  {
+    "name": "Vite",
+    "icon": "img/icon/edge.png",
+    "type": "game",
+    "data": {
+      "type": "IFrame",
+      "url": "https://vitejs.dev",
+      "gallery": [],
+      "desc": "The next-generation frontend build tool powering this project. Vite provides fast hot module replacement, optimized production builds, and a streamlined developer experience.",
+      "feat": "Lightning-fast HMR\nOptimized production builds\nPlugin ecosystem\nModern ES modules"
+    }
+  }
+]

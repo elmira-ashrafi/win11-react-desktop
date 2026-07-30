@@ -1,0 +1,10 @@
+{
+  "name": "Win11 React Desktop",
+  "description": "Interactive Windows 11 desktop portfolio built with React",
+  "repository": "https://github.com/elmira-ashrafi/win11-react-desktop",
+  "logo": "https://avatars.githubusercontent.com/u/310684256?v=4",
+  "keywords": ["Windows11", "React", "Portfolio", "Redux", "Vite"],
+  "engines": {
+    "npm": ">=8.x"
+  }
+}
