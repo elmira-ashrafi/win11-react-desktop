@@ -2,9 +2,76 @@
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-win11--react--desktop.ashrafisolutions.com-orange?style=for-the-badge)](https://win11-react-desktop.ashrafisolutions.com/)
 
+**Live site:** https://win11-react-desktop.ashrafisolutions.com/
+
 ![Desktop preview](./docs/screenshots/win11.png)
 
 ![File Explorer and Spotify](./docs/screenshots/win11-apps.png)
+
+## Production Infrastructure
+
+Win11 React Desktop is served in production at [https://win11-react-desktop.ashrafisolutions.com/](https://win11-react-desktop.ashrafisolutions.com/) as a static single-page application. Traffic reaches a Docker container that serves the Vite build output — no Apache or PHP runtime is involved for this project. The same origin server hosts other applications in separate containers, some of which do run Apache with PHP for Laravel workloads.
+
+| Layer | Component | Role for this project |
+|-------|-----------|------------------------|
+| **Edge** | Cloudflare | Proxied DNS (orange cloud), CDN caching, DDoS protection, SSL termination at the edge |
+| **Origin** | Host Nginx | Domain routing by `server_name`, reverse proxy to the container's mapped host port, Let's Encrypt certificates via Certbot |
+| **Runtime** | Docker container | Nginx on port 80 serving the Vite `build/` output (React 18 static SPA) |
+
+**Deployment summary**
+
+| Item | Value |
+|------|-------|
+| Live site | [https://win11-react-desktop.ashrafisolutions.com/](https://win11-react-desktop.ashrafisolutions.com/) |
+| Container host port | Dedicated mapped port on the host (routed by Nginx `server_name`) |
+| Runtime in container | Nginx :80 serving static assets from Vite production build |
+| Framework / stack | React 18 + Vite 3 (static SPA, PWA-capable) |
+| Webhooks / external callbacks | None |
+
+### Architecture overview
+
+```mermaid
+flowchart LR
+    Client["Browser / Client"]
+    CF["Cloudflare\n(Proxied DNS, CDN, SSL)"]
+    HN["Host Nginx\n(Certbot / Let's Encrypt)"]
+    C1["Docker: win11-react-desktop\nNginx :80 → Vite static build"]
+    C2["Docker: other project\nApache :80 + PHP 8.x + Laravel"]
+
+    Client --> CF
+    CF --> HN
+    HN -->|"server_name → proxy_pass\n127.0.0.1:host-port"| C1
+    HN -->|"server_name → proxy_pass\n127.0.0.1:other-port"| C2
+```
+
+### Request flow
+
+```mermaid
+sequenceDiagram
+    participant B as Browser
+    participant CF as Cloudflare
+    participant HN as Host Nginx
+    participant DC as Docker Container
+    participant NG as Nginx (in container)
+    participant FS as Static files (Vite build)
+
+    B->>CF: HTTPS request (HTML / JS / CSS / assets)
+    CF->>HN: Forwarded request (CF-Connecting-IP, X-Forwarded-Proto)
+    HN->>DC: proxy_pass to mapped host port
+    DC->>NG: HTTP on container port 80
+    NG->>FS: Serve index.html / bundled assets
+    FS-->>NG: Static response
+    NG-->>DC: HTTP 200
+    DC-->>HN: Response
+    HN-->>CF: Response
+    CF-->>B: Cached or fresh content over HTTPS
+```
+
+**Cloudflare** sits in front of every public domain with proxied DNS (orange cloud enabled). It provides CDN edge caching for static assets, DDoS mitigation, and TLS at the perimeter. Origin requests carry `CF-Connecting-IP` for the real client address and `X-Forwarded-Proto` so the host knows the original scheme was HTTPS. Cloudflare SSL mode is set to **Full (Strict)** so traffic between Cloudflare and the origin remains encrypted end-to-end.
+
+**Host Nginx** runs directly on the server operating system — it is not inside Docker. Each domain has its own `server_name` block that forwards traffic to the correct container via `proxy_pass` on a dedicated `127.0.0.1` host port. TLS certificates are issued and renewed on the host with **Let's Encrypt** and **Certbot**, keeping certificate management separate from individual containers.
+
+**Docker and runtime for this app** package only the production build of the React application. After `npm run build`, the `build/` directory is served by **Nginx on port 80** inside the container — there is no Apache, PHP, or application server process. This differs from PHP/Laravel projects on the same host, where containers typically run Apache on port 80 with PHP-FPM. Win11 React Desktop is a purely client-side SPA; all routing after the initial page load is handled by React in the browser.
 
 An interactive **Windows 11 desktop simulator** built with React — designed as a creative portfolio experience that showcases modern frontend engineering, UI craftsmanship, and state-driven application architecture.
 
