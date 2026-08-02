@@ -1,10 +1,14 @@
 # Win11 React Desktop
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-win11--react--desktop.ashrafisolutions.com-orange?style=for-the-badge)](https://win11-react-desktop.ashrafisolutions.com/)
+
+![Desktop preview](./docs/screenshots/win11.png)
+
+![File Explorer and Spotify](./docs/screenshots/win11-apps.png)
+
 An interactive **Windows 11 desktop simulator** built with React — designed as a creative portfolio experience that showcases modern frontend engineering, UI craftsmanship, and state-driven application architecture.
 
 > **Disclaimer:** This project is not affiliated with Microsoft and is not a real operating system or Windows 365 cloud PC. It is a browser-based UI simulation built for educational and portfolio purposes.
-
-![Desktop preview](./public/img/home.jpg)
 
 ## Project Overview
 
